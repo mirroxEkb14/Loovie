@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Loovie</string>
+    <string name="disclaimer">The images are from https://www.movieposters.com/</string>
+    
+    <string name="btm_menu">Menu</string>
+    <string name="btn_favorites">Favorites</string>
+    <string name="btn_watch_later">Watch later</string>
+    <string name="btn_selections">Selections</string>
+    <string name="btn_settings">Settings</string>
 </resources>

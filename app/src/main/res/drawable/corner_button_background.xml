@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Background for 'button_container' -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient android:startColor="@android:color/holo_orange_light"
+        android:endColor="@color/design_default_color_primary_dark"
+        android:angle="45"/>
+    <corners android:radius="15dp"/>
+</shape>
