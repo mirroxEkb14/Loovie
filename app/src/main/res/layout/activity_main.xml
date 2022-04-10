@@ -4,56 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_background_gradient"
     tools:context=".MainActivity">
 
-    <!-- container for buttons -->
-    <LinearLayout
-        android:id="@+id/button_container"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_actionbar"
-        app:layout_constraintTop_toBottomOf="@+id/top_actionbar"
-        android:layout_width="300dp"
+    <!-- top app bar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/corner_button_background">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/btn_menu"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btm_menu"/>
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/page_title"
+            app:navigationIcon="@drawable/ic_baseline_menu_24"
+            app:menu="@menu/top_toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
 
-        <Button
-            android:id="@+id/btn_favorites"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_favorites"/>
-
-        <Button
-            android:id="@+id/btn_watch_later"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_watch_later"/>
-
-        <Button
-            android:id="@+id/btn_selections"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_selections"/>
-
-        <Button
-            android:id="@+id/btn_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_settings"/>
-
-    </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- top action bar -->
     <androidx.cardview.widget.CardView
         android:id="@+id/top_actionbar"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -114,13 +89,15 @@
         android:linksClickable="true"/>
 
     <!-- bottom action bar-->
-    <FrameLayout
-    android:id="@+id/bottom_actionbar"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:background="#00DAC5">
-
-    </FrameLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_primary_dark"
+        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/navigation_menu"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
