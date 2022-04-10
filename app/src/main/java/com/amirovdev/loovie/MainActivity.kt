@@ -4,40 +4,47 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initMenuButtons()
+        initNavigation()
     }
 
-    // show Toast when clicking on the buttons
-    private fun initMenuButtons() {
-        val btnMenu = findViewById<Button>(R.id.btn_menu)
-        btnMenu.setOnClickListener{
-            Toast.makeText(this, "Menu", Toast.LENGTH_SHORT).show()
+    private fun initNavigation() {
+        val topToolbar = findViewById<MaterialToolbar>(R.id.top_toolbar)
+        topToolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.settings -> {
+                    Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
         }
 
-        val btnFavorites = findViewById<Button>(R.id.btn_favorites)
-        btnFavorites.setOnClickListener{
-            Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
-        }
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigation.setOnNavigationItemSelectedListener {
 
-        val btnWatchLater = findViewById<Button>(R.id.btn_watch_later)
-        btnWatchLater.setOnClickListener{
-            Toast.makeText(this, "Watch later", Toast.LENGTH_SHORT).show()
-        }
-
-        val btnSelections = findViewById<Button>(R.id.btn_selections)
-        btnSelections.setOnClickListener{
-            Toast.makeText(this, "Selections", Toast.LENGTH_SHORT).show()
-        }
-
-        val btnSettings = findViewById<Button>(R.id.btn_settings)
-        btnSettings.setOnClickListener{
-            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
+            when (it.itemId) {
+                R.id.favorites -> {
+                    Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.watch_later -> {
+                    Toast.makeText(this, "Watch later", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.selections -> {
+                    Toast.makeText(this, "Selections", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
         }
     }
 }
