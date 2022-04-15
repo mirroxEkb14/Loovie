@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Animation for poster container
+
+    android:animation="@anim/card_anim"
+    -> the animation appears
+    android:interpolator="@android:interpolator/decelerate_cubic"
+    -> set the interpolator
+    android:animationOrder="normal"
+    -> the appearing in order
+    android:delay="0.1"
+    -> delay before appearing
+-->
+
+<layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:animation="@anim/card_anim"
+    android:interpolator="@android:interpolator/decelerate_cubic"
+    android:animationOrder="normal"
+    android:delay="0.1">
+
+</layoutAnimation>
