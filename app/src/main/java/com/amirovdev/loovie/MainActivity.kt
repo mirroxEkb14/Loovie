@@ -13,6 +13,7 @@ import com.amirovdev.loovie.model.Film
 import com.amirovdev.loovie.service.TopSpacingItemDecoration
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -80,15 +81,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val snackBar = Snackbar.make(main_layout, "Snackbar!", Snackbar.LENGTH_SHORT)
         bottomNavigation.setOnNavigationItemSelectedListener {
 
             when (it.itemId) {
                 R.id.favorites -> {
-                    Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
+                    snackBar.setAction("Action") {
+                        Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
+                    }.show()
                     true
                 }
                 R.id.watch_later -> {
-                    Toast.makeText(this, "Watch later", Toast.LENGTH_SHORT).show()
+                    snackBar.setAction("Action") {
+                        Toast.makeText(this, "Watch later", Toast.LENGTH_SHORT).show()
+                    }.show()
                     true
                 }
                 R.id.selections -> {
