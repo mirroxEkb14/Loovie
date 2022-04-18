@@ -13,6 +13,8 @@ import com.amirovdev.loovie.model.Film
 import com.amirovdev.loovie.service.TopSpacingItemDecoration
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var filmsDataBase: ArrayList<Film>
@@ -34,23 +36,25 @@ class MainActivity : AppCompatActivity() {
         mainRecycler.apply {
 
             // processing clicking on RecyclerView elements
-            filmsAdapter = FilmListRecyclerAdapter(filmsDataBase, object : FilmListRecyclerAdapter.OnItemClickListener{
-                override fun click(film: Film) {
-                    // create a bundle and put in there an object with film data
-                    val bundle = Bundle()
+            filmsAdapter = FilmListRecyclerAdapter(
+                filmsDataBase,
+                object : FilmListRecyclerAdapter.OnItemClickListener {
+                    override fun click(film: Film) {
+                        // create a bundle and put in there an object with film data
+                        val bundle = Bundle()
 
-                    // the first parameter is a key by which we will search,
-                    // the second parameter is a passing object
-                    bundle.putParcelable("film", film)
+                        // the first parameter is a key by which we will search,
+                        // the second parameter is a passing object
+                        bundle.putParcelable("film", film)
 
-                    // launch the Activity
-                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                    // attach a Bundle to Intent
-                    intent.putExtras(bundle)
-                    // launch the Activity through the Intent
-                    startActivity(intent)
-                }
-            })
+                        // launch the Activity
+                        val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                        // attach a Bundle to Intent
+                        intent.putExtras(bundle)
+                        // launch the Activity through the Intent
+                        startActivity(intent)
+                    }
+                })
             // assign adapter and layoutManager
             adapter = filmsAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -58,19 +62,10 @@ class MainActivity : AppCompatActivity() {
             // apply decorators for margins
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
-            }
-
-            fun updateData(newList: ArrayList<Film>) {
-                val oldList = filmsAdapter.data // get the old list
-                val productDiff = FilmDiff(oldList, newList)
-                val diffResult = DiffUtil.calculateDiff(productDiff)
-                filmsAdapter.data = newList // set a new list
-                diffResult.dispatchUpdatesTo(filmsAdapter) // the data changed in Adapter
-            }
-
-            // put the BD in RecyclerView
-            filmsAdapter.addItems(filmsDataBase)
         }
+        // put the BD in RecyclerView
+        filmsAdapter.addItems(filmsAdapter)
+    }
 
     private fun initNavigation() {
         val topToolbar = findViewById<MaterialToolbar>(R.id.top_toolbar)

@@ -3,6 +3,7 @@ package com.amirovdev.loovie.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amirovdev.loovie.R
 import com.amirovdev.loovie.model.Film
@@ -36,13 +37,19 @@ class FilmListRecyclerAdapter(var data: ArrayList<Film>, private val clickListen
     }
 
     // for adding elements to our list
-    fun addItems(list: List<Film>) {
-        //Сначала очищаем(если не реализовать DiffUtils)
-        data.clear()
-        //Добавляем
-        data.addAll(list)
-        //Уведомляем RV, что пришел новый список, и ему нужно заново все "привязывать"
-        notifyDataSetChanged()
+    fun addItems(adapter: FilmListRecyclerAdapter) {
+        val newList = arrayListOf<Film>()
+        newList.addAll(adapter.data)
+        updateData(newList, adapter)
+    }
+
+    // updates the data in RecyclerView
+    private fun updateData(newList: ArrayList<Film>, adapter: FilmListRecyclerAdapter) {
+        val oldList = adapter.data // get the old list
+        val productDiff = FilmDiff(oldList, newList)
+        val diffResult = DiffUtil.calculateDiff(productDiff)
+        adapter.data = newList // set a new list
+        diffResult.dispatchUpdatesTo(adapter) // the data changed in Adapter
     }
 
     // interface for processing the clicks
