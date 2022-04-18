@@ -4,17 +4,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amirovdev.loovie.adapter.FilmDiff
 import com.amirovdev.loovie.adapter.FilmListRecyclerAdapter
 import com.amirovdev.loovie.model.Film
 import com.amirovdev.loovie.service.TopSpacingItemDecoration
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var filmsDataBase: List<Film>
+    private lateinit var filmsDataBase: ArrayList<Film>
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         mainRecycler.apply {
 
             // processing clicking on RecyclerView elements
-            filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener{
+            filmsAdapter = FilmListRecyclerAdapter(filmsDataBase, object : FilmListRecyclerAdapter.OnItemClickListener{
                 override fun click(film: Film) {
                     // create a bundle and put in there an object with film data
                     val bundle = Bundle()
@@ -57,10 +58,19 @@ class MainActivity : AppCompatActivity() {
             // apply decorators for margins
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
+            }
+
+            fun updateData(newList: ArrayList<Film>) {
+                val oldList = filmsAdapter.data // get the old list
+                val productDiff = FilmDiff(oldList, newList)
+                val diffResult = DiffUtil.calculateDiff(productDiff)
+                filmsAdapter.data = newList // set a new list
+                diffResult.dispatchUpdatesTo(filmsAdapter) // the data changed in Adapter
+            }
+
+            // put the BD in RecyclerView
+            filmsAdapter.addItems(filmsDataBase)
         }
-        // put the BD in RecyclerView
-        filmsAdapter.addItems(filmsDataBase)
-    }
 
     private fun initNavigation() {
         val topToolbar = findViewById<MaterialToolbar>(R.id.top_toolbar)
@@ -96,19 +106,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFilmDataBase() {
-        filmsDataBase = listOf(
-            Film("Collateral Beauty", R.drawable.collateral_beauty, getString(R.string.collateral_beauty_desc)),
-            Film("A Beautiful Mind", R.drawable.a_beautiful_mind, getString(R.string.a_beautiful_mind_desc)),
-            Film("Motherless Brooklyn", R.drawable.motherless_brooklyn, getString(R.string.motherless_brooklyn_desc)),
-            Film("Black Swan", R.drawable.black_swan, getString(R.string.black_swan_desc)),
-            Film("Catch me if You Can", R.drawable.catch_me_if_you_can, getString(R.string.catch_me_if_you_can_desc)),
-            Film("Carlito's Way", R.drawable.carlitos_way, getString(R.string.carlitos_way_desc)),
-            Film("Young Sheldon", R.drawable.young_sheldon, getString(R.string.young_sheldon_desc)),
-            Film("Million Dollar Baby", R.drawable.million_dollar_baby, getString(R.string.million_dollar_baby_desc)),
-            Film("The Big Lebowski", R.drawable.the_big_lebowski, getString(R.string.the_big_lebowski_desc)),
-            Film("Coco", R.drawable.coco, getString(R.string.coco_desc)),
-            Film("Requiem for a Dream", R.drawable.requiem_for_a_dream, getString(R.string.requiem_for_a_dream_desc)),
-            Film("Righteous Kill", R.drawable.righteous_kill, getString(R.string.righteous_kill_desc))
+        filmsDataBase = arrayListOf(
+            Film(0, "Collateral Beauty", R.drawable.collateral_beauty, getString(R.string.collateral_beauty_desc)),
+            Film(1, "A Beautiful Mind", R.drawable.a_beautiful_mind, getString(R.string.a_beautiful_mind_desc)),
+            Film(2, "Motherless Brooklyn", R.drawable.motherless_brooklyn, getString(R.string.motherless_brooklyn_desc)),
+            Film(3, "Black Swan", R.drawable.black_swan, getString(R.string.black_swan_desc)),
+            Film(4, "Catch me if You Can", R.drawable.catch_me_if_you_can, getString(R.string.catch_me_if_you_can_desc)),
+            Film(5, "Carlito's Way", R.drawable.carlitos_way, getString(R.string.carlitos_way_desc)),
+            Film(6, "Young Sheldon", R.drawable.young_sheldon, getString(R.string.young_sheldon_desc)),
+            Film(7,"Million Dollar Baby", R.drawable.million_dollar_baby, getString(R.string.million_dollar_baby_desc)),
+            Film(8, "The Big Lebowski", R.drawable.the_big_lebowski, getString(R.string.the_big_lebowski_desc)),
+            Film(9, "Coco", R.drawable.coco, getString(R.string.coco_desc)),
+            Film(10, "Requiem for a Dream", R.drawable.requiem_for_a_dream, getString(R.string.requiem_for_a_dream_desc)),
+            Film(11, "Righteous Kill", R.drawable.righteous_kill, getString(R.string.righteous_kill_desc))
         )
     }
 }
+

@@ -60,7 +60,7 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|right"
         app:srcCompat="@drawable/ic_baseline_share_24"
-        android:tint="@android:color/white"/>
+        app:tint="@android:color/white"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

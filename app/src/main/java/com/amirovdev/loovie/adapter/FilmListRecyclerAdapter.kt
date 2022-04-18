@@ -8,13 +8,10 @@ import com.amirovdev.loovie.R
 import com.amirovdev.loovie.model.Film
 
 // the listener is passed so we can process clicks from Activity
-class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    // contains the list of RecyclerView elements
-    private val items = mutableListOf<Film>()
+class FilmListRecyclerAdapter(var data: ArrayList<Film>, private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // returns the amount of RecyclerView elements
-    override fun getItemCount() = items.size
+    override fun getItemCount() = data.size
 
     // binds the ViewHolder and passes the 'inflated' markup of the Film
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -28,11 +25,11 @@ class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : 
         when (holder) {
             is FilmViewHolder -> {
                 // pass the object from the base with a certain position
-                holder.bind(items[position])
+                holder.bind(data[position])
 
                 // process the click on the whole element
                 holder.itemView.findViewById<CardView>(R.id.item_container).setOnClickListener {
-                    clickListener.click(items[position])
+                    clickListener.click(data[position])
                 }
             }
         }
@@ -41,9 +38,9 @@ class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : 
     // for adding elements to our list
     fun addItems(list: List<Film>) {
         //Сначала очищаем(если не реализовать DiffUtils)
-        items.clear()
+        data.clear()
         //Добавляем
-        items.addAll(list)
+        data.addAll(list)
         //Уведомляем RV, что пришел новый список, и ему нужно заново все "привязывать"
         notifyDataSetChanged()
     }

@@ -32,6 +32,6 @@ class DetailsActivity : AppCompatActivity() {
         // assign the data to our DetailsActivity screen
         detailsToolbar.title = film.title
         detailsPoster.setImageResource(film.poster)
-        detailsDescription.text = film.description
+        detailsDescription.text = film.desc
     }
 }
