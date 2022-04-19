@@ -1,16 +1,9 @@
 package com.amirovdev.loovie
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.amirovdev.loovie.adapter.FilmDiff
-import com.amirovdev.loovie.adapter.FilmListRecyclerAdapter
 import com.amirovdev.loovie.model.Film
-import com.amirovdev.loovie.service.TopSpacingItemDecoration
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -18,54 +11,35 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var filmsDataBase: ArrayList<Film>
-    private lateinit var filmsAdapter: FilmListRecyclerAdapter
+    private var backPressed = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initNavigation()
-        initFilmDataBase()
-        initRecyclerView()
+
+        // launch the Fragment when starting
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.fragment_placeholder, HomeFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
-    private fun initRecyclerView() {
+    // launch details Fragment
+    fun launchDetailsFragment(film: Film) {
+        val bundle = Bundle() // create a like
+        bundle.putParcelable("film", film) // put the Film in a 'parcel'
+        val fragment = DetailsFragment() // put details Fragment in variable
+        fragment.arguments = bundle // attach the 'parcel' to Fragment
 
-        // find RecyclerView
-        val mainRecycler = findViewById<RecyclerView>(R.id.main_recycler)
-        mainRecycler.apply {
-
-            // processing clicking on RecyclerView elements
-            filmsAdapter = FilmListRecyclerAdapter(
-                filmsDataBase,
-                object : FilmListRecyclerAdapter.OnItemClickListener {
-                    override fun click(film: Film) {
-                        // create a bundle and put in there an object with film data
-                        val bundle = Bundle()
-
-                        // the first parameter is a key by which we will search,
-                        // the second parameter is a passing object
-                        bundle.putParcelable("film", film)
-
-                        // launch the Activity
-                        val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                        // attach a Bundle to Intent
-                        intent.putExtras(bundle)
-                        // launch the Activity through the Intent
-                        startActivity(intent)
-                    }
-                })
-            // assign adapter and layoutManager
-            adapter = filmsAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
-
-            // apply decorators for margins
-            val decorator = TopSpacingItemDecoration(8)
-            addItemDecoration(decorator)
-        }
-        // put the BD in RecyclerView
-        filmsAdapter.addItems(filmsAdapter)
+        // launch the Fragment
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_placeholder, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun initNavigation() {
@@ -85,6 +59,12 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener {
 
             when (it.itemId) {
+                R.id.home -> {
+                    snackBar.setAction("Action") {
+                        Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
+                    }.show()
+                    true
+                }
                 R.id.favorites -> {
                     snackBar.setAction("Action") {
                         Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
@@ -106,21 +86,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFilmDataBase() {
-        filmsDataBase = arrayListOf(
-            Film(0, "Collateral Beauty", R.drawable.collateral_beauty, getString(R.string.collateral_beauty_desc)),
-            Film(1, "A Beautiful Mind", R.drawable.a_beautiful_mind, getString(R.string.a_beautiful_mind_desc)),
-            Film(2, "Motherless Brooklyn", R.drawable.motherless_brooklyn, getString(R.string.motherless_brooklyn_desc)),
-            Film(3, "Black Swan", R.drawable.black_swan, getString(R.string.black_swan_desc)),
-            Film(4, "Catch me if You Can", R.drawable.catch_me_if_you_can, getString(R.string.catch_me_if_you_can_desc)),
-            Film(5, "Carlito's Way", R.drawable.carlitos_way, getString(R.string.carlitos_way_desc)),
-            Film(6, "Young Sheldon", R.drawable.young_sheldon, getString(R.string.young_sheldon_desc)),
-            Film(7,"Million Dollar Baby", R.drawable.million_dollar_baby, getString(R.string.million_dollar_baby_desc)),
-            Film(8, "The Big Lebowski", R.drawable.the_big_lebowski, getString(R.string.the_big_lebowski_desc)),
-            Film(9, "Coco", R.drawable.coco, getString(R.string.coco_desc)),
-            Film(10, "Requiem for a Dream", R.drawable.requiem_for_a_dream, getString(R.string.requiem_for_a_dream_desc)),
-            Film(11, "Righteous Kill", R.drawable.righteous_kill, getString(R.string.righteous_kill_desc))
-        )
+    // double tap for exit the app
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+                super.onBackPressed()
+                finish()
+            } else {
+                Toast.makeText(this, "Double tap for exit", Toast.LENGTH_SHORT).show()
+            }
+            backPressed = System.currentTimeMillis()
+
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    // how much time the user has to tap one more time to exit
+    companion object {
+        const val TIME_INTERVAL = 2000
     }
 }
 
