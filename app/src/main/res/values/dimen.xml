@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="image_film_item_width">150dp</dimen>
+    <dimen name="fragment_details_text_margin">8dp</dimen>
+    <dimen name="recycler_view_margin">16dp</dimen>
+    <dimen name="disclaimer_top_margin">16dp</dimen>
+    <dimen name="card_view_actionbar_height">100dp</dimen>
+    <dimen name="card_view_margin">10dp</dimen>
+</resources>
