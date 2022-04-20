@@ -1,5 +1,6 @@
 package com.amirovdev.loovie
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import com.amirovdev.loovie.model.Film
+import kotlinx.android.synthetic.main.fragment_details.*
 
 /**
  * A screen for film details: when the user clicks
@@ -17,10 +19,12 @@ import com.amirovdev.loovie.model.Film
 
 class DetailsFragment : Fragment() {
 
+    // in this method we get View, so we should initialize all the Views in here
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         processViews()
+        println("--------------------------\n${details_toolbar.isOverflowMenuShowing}\n------------------------------------")
     }
 
     override fun onCreateView(
