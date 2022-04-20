@@ -3,6 +3,7 @@ package com.amirovdev.loovie
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.amirovdev.loovie.DetailsFragment.Companion.FILM_KEY
 import com.amirovdev.loovie.model.Film
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     // launch details Fragment
     fun launchDetailsFragment(film: Film) {
         val bundle = Bundle() // create a like
-        bundle.putParcelable("film", film) // put the Film in a 'parcel'
+        bundle.putParcelable(FILM_KEY, film) // put the Film in a 'parcel'
         val fragment = DetailsFragment() // put details Fragment in variable
         fragment.arguments = bundle // attach the 'parcel' to Fragment
 
