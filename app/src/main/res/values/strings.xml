@@ -11,6 +11,7 @@
     <string name="page_title">Look for It!</string>
 
     <string name="menu_settings_title">Settings</string>
+    <string name="menu_home_title">Home</string>
     <string name="menu_favorites_title">Favorites</string>
     <string name="menu_watch_later_title">Watch later</string>
     <string name="menu_selections_title">Selections</string>
@@ -51,4 +52,6 @@
     <string name="righteous_kill_desc">
         is a 2008 American action thriller film directed by Jon Avnet and written by Russell Gewirtz. The film stars Robert De Niro and Al Pacino as New York City Police Department detectives on the hunt for a serial killer. It is the third film in which both De Niro and Pacino appear in starring roles (after The Godfather Part II and Heat), and also stars John Leguizamo, Carla Gugino, Donnie Wahlberg, Brian Dennehy, and Curtis Jackson. Righteous Kill was released in the United States on September 12, 2008. The film received negative reviews from critics and grossed $74 million against a $60 million budget.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
