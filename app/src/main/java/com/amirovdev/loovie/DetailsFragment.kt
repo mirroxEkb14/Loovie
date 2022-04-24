@@ -1,6 +1,6 @@
 package com.amirovdev.loovie
 
-import android.content.res.Configuration
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,12 +19,41 @@ import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
 
+    lateinit var film: Film
+
     // in this method we get View, so we should initialize all the Views in here
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         processViews()
-        println("--------------------------\n${details_toolbar.isOverflowMenuShowing}\n------------------------------------")
+
+        // if the movie is in favorites or not, the icon differs
+        details_fab_favorites.setImageResource(
+            if (film.isInFavorites) R.drawable.ic_baseline_favorite_24
+            else R.drawable.ic_baseline_favorite_border_24
+        )
+
+        // listener for the favorite button
+        details_fab_favorites.setOnClickListener {
+            if (!film.isInFavorites) {
+                details_fab_favorites.setImageResource(R.drawable.ic_baseline_favorite_24)
+                film.isInFavorites = true
+            } else {
+                details_fab_favorites.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                film.isInFavorites = false
+            }
+        }
+
+        // when clicking on 'share' button
+        details_fab.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND // action with that it launches
+            // film data
+            intent.putExtra(Intent.EXTRA_TEXT, "Check out this film: ${film.title} \n\n ${film.desc}")
+            //set MIME type, so that the System knows, what app to offer
+            intent.type = "text/plain"
+            startActivity(Intent.createChooser(intent, "Share To:"))
+        }
     }
 
     override fun onCreateView(
@@ -36,7 +65,7 @@ class DetailsFragment : Fragment() {
 
     private fun processViews() {
         // get the Film from the passed Bundle
-        val film = arguments?.get(FILM_KEY) as Film
+        film = arguments?.get(FILM_KEY) as Film
 
         // initialize the Views
         val detailsToolbar = view?.findViewById<Toolbar>(R.id.details_toolbar)

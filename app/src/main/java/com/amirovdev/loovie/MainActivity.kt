@@ -67,9 +67,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.favorites -> {
-                    snackBar.setAction("Action") {
-                        Toast.makeText(this, "Favorites", Toast.LENGTH_SHORT).show()
-                    }.show()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_placeholder, FavoritesFragment())
+                        .addToBackStack(null)
+                        .commit()
                     true
                 }
                 R.id.watch_later -> {

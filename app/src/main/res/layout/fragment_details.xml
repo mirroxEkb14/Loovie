@@ -75,4 +75,17 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <!-- add the current movie to favorites -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/details_fab_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:borderWidth="0dp"
+        android:backgroundTint="@android:color/holo_orange_dark"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="left|bottom"
+        app:srcCompat="@drawable/ic_baseline_favorite_border_24"
+        app:tint="@android:color/white"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
