@@ -23,9 +23,7 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val favoritesList = arrayListOf<Film>(
-
-        )
+        val favoritesList = arrayListOf<Film>()
 
         view.findViewById<RecyclerView>(R.id.favorites_recycler)
             .apply {

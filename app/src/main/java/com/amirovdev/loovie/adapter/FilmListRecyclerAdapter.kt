@@ -43,6 +43,16 @@ class FilmListRecyclerAdapter(var data: ArrayList<Film>, private val clickListen
         updateData(newList, adapter)
     }
 
+    // a temporary method of adding elements
+    fun addItemsTemporary(list: List<Film>) {
+        // clear all the list
+        data.clear()
+        // add a new one
+        data.addAll(list)
+        // notify RecyclerView that a new element has come and it has to bind everything again
+        notifyDataSetChanged()
+    }
+
     // updates the data in RecyclerView
     private fun updateData(newList: ArrayList<Film>, adapter: FilmListRecyclerAdapter) {
         val oldList = adapter.data // get the old list

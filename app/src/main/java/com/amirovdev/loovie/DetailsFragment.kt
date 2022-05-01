@@ -27,12 +27,6 @@ class DetailsFragment : Fragment() {
 
         processViews()
 
-        // if the movie is in favorites or not, the icon differs
-        details_fab_favorites.setImageResource(
-            if (film.isInFavorites) R.drawable.ic_baseline_favorite_24
-            else R.drawable.ic_baseline_favorite_border_24
-        )
-
         // listener for the favorite button
         details_fab_favorites.setOnClickListener {
             if (!film.isInFavorites) {
@@ -45,7 +39,7 @@ class DetailsFragment : Fragment() {
         }
 
         // when clicking on 'share' button
-        details_fab.setOnClickListener {
+        details_fab_share.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_SEND // action with that it launches
             // film data
@@ -56,10 +50,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_details, container, false)
     }
 

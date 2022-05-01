@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amirovdev.loovie.adapter.FilmListRecyclerAdapter
 import com.amirovdev.loovie.model.Film
 import com.amirovdev.loovie.service.TopSpacingItemDecoration
+import kotlinx.android.synthetic.main.fragment_home.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -26,6 +30,40 @@ class HomeFragment : Fragment() {
 
         initFilmDataBase()
         initRecyclerView()
+
+        // now the user can click everywhere in SearchView, not only on the lope
+        search_view.setOnClickListener {
+            search_view.isIconified = false
+        }
+
+        // connect a listener of input text change in the SearchView
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+
+            // when we click the 'Search' button on the keyword
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            // calls when the text changes
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                // if the input is empty, set to the Adapter the whole BD
+                if (newText!!.isEmpty()) {
+                    filmsAdapter.addItems(filmsAdapter)
+                    return true
+                }
+
+                // filtering the list to search for suitable combinations
+                val result = filmsDataBase.filter {
+                    // for everything to work properly, we need to set the request and film name to lower case
+                    it.title!!.toLowerCase(Locale.getDefault()).contains(newText.toLowerCase(Locale.getDefault()))
+                }
+                // add to the Adapter
+                filmsAdapter.addItemsTemporary(result)
+
+                return true
+            }
+        })
     }
 
     private fun initRecyclerView() {
